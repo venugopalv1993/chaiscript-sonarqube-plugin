@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Declares that this is an XML file and specifies the version and character encoding. -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- The root element `<project>` represents the Maven project and includes namespaces:
+     - `xmlns` refers to the POM schema from Maven.
+     - `xmlns:xsi` specifies the XML Schema Instance namespace, allowing schema location declarations.
+     - `xsi:schemaLocation` provides a link to the Maven POM schema for XML validation. -->
+
+  <modelVersion>4.0.0</modelVersion>
+  <!-- Specifies the POM model version. `4.0.0` is the required value for Maven. -->
+
+  <groupId>com.sbm.sonarqube</groupId>
+  <!-- Defines the group ID for the project, usually following a reverse domain name format for unique identification. -->
+
+  <artifactId>chaiscript-plugin</artifactId>
+  <!-- The artifact ID for this project. Together with the `groupId` and `version`, it uniquely identifies the artifact in the Maven repository. -->
+
+  <version>1.0-0</version>
+  <!-- Specifies the version of the plugin. `SNAPSHOT` indicates a development version that may change before a final release. -->
+
+  <!-- this is important for sonar-packaging-maven-plugin -->
+  <packaging>sonar-plugin</packaging>
+  <!-- Defines the packaging type for the project. `sonar-plugin` is required for SonarQube plugins. -->
+
+  <dependencies>
+    <!-- This section lists dependencies required to build and run the project. -->
+    
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>9.11.0.290</version>
+      <scope>provided</scope>
+      <!-- A dependency on the SonarQube plugin API, used to create SonarQube plugins.
+           - `scope` set to `provided` means the dependency is needed at compile time but provided at runtime by the SonarQube environment. -->
+    </dependency>
+    
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>sonar-java-plugin</artifactId>
+      <version>8.5.0.37199</version>
+      <scope>provided</scope>
+      <!-- Adds the Java plugin dependency, which may offer Java-related features for this plugin.
+           It is also marked as `provided` for the same reasons as above. -->
+    </dependency>
+   
+    <dependency>
+      <groupId>org.sonarsource.scanner.api</groupId>
+      <artifactId>sonar-scanner-api-batch</artifactId>
+      <version>2.16.3.1081</version>
+      <scope>provided</scope>
+      <!-- Includes the Sonar Scanner API for batch processing, used to interact with SonarQube scanner features in batch mode. -->
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- Configures the build process for the plugin. -->
+
+    <plugins>
+      <!-- Specifies plugins used in the build process. -->
+
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.23.0.740</version>
+        <extensions>true</extensions>
+        <!-- Declares the Sonar Packaging Maven Plugin, used to package and validate SonarQube plugins.
+             - `extensions` set to `true` enables the plugin’s functionality in the build process. -->
+
+        <configuration>
+          <!-- Configuration settings specific to the Sonar Packaging Maven Plugin. -->
+
+          <pluginClass>com.sbm.sonarqube.chaiscript.plugin.ChaiScriptPlugin</pluginClass>
+          <!-- Specifies the main class of the plugin that extends `org.sonar.api.SonarPlugin`. This is the entry point for the plugin. -->
+
+          <pluginDescription>Your plugin description here</pluginDescription>
+          <!-- Describes the plugin's purpose, displayed in SonarQube for user information. -->
+          
+          <!-- Additional advanced properties could be configured here as needed. -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
